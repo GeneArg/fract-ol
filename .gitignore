@@ -12,6 +12,10 @@
 *.out
 infile
 outfile
+ft_printf
+libft
+MLX42
+pixel_test.c
 
 # Ignore files specific to macOS
 .DS_Store
