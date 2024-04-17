@@ -6,7 +6,7 @@
 /*   By: eagranat <eagranat@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:01:21 by eagranat          #+#    #+#             */
-/*   Updated: 2024/04/12 16:42:27 by eagranat         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:24:17 by eagranat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,73 @@ void	print_error(char *str, int exit_code)
 {
 	ft_putstr_fd(str, 2);
 	exit(exit_code);
+}
+
+void	control_hook(void *context)
+{
+	t_data	*data;
+
+	data = (t_data *) context;
+	(void) data;
+	// mouse functionality here
+}
+
+void	initialize_mandelbrot(t_data *data)
+{
+	data->iter = 50;
+	data->x[0] = -3;
+	data->x[1] = 2;
+	data->y[0] = 1.5;
+	data->y[1] = -1.5;
+	data->colour[R] = 2;
+	data->colour[G] = 4;
+	data->colour[B] = 6;
+}
+
+float	ft_atof(char *str)
+{
+	float	res;
+	float	dec;
+	int		i;
+	int		sign;
+
+	i = 0;
+	res = 0;
+	dec = 0;
+	sign = 1;
+	if (str[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	while (str[i] && str[i] != '.')
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	if (str[i] == '.')
+		i++;
+	while (str[i])
+	{
+		dec = dec * 10 + str[i] - '0';
+		i++;
+	}
+	dec /= pow(10, i);
+	return ((res + dec) * sign);
+}
+
+void	initialize_julia(t_data *data, int argc, char **argv)
+{
+	if (argc == 4)
+	{
+		data->julia[0] = ft_atof(argv[2]);
+		data->julia[1] = ft_atof(argv[3]);
+	}
+	else
+	{
+		data->julia[0] = 0;
+		data->julia[1] = 0.8;
+	}
 }
 
 void	initialize_mlx(t_data *data)
@@ -33,8 +100,8 @@ void	initialize_mlx(t_data *data)
 void	initialize(t_data *data, int argc, char **argv)
 {
 	initialize_mlx(data);
-	(void)argc;
-	(void)argv;
+	initialize_mandelbrot(data);
+	initialize_julia(data, argc, argv);
 }
 
 int	validate_coords(char *str)
@@ -65,6 +132,7 @@ int main(int argc, char **argv)
 				print_error("Invalid coordinates\n", 1);
 		}
 		initialize(&data, argc, argv);
+		mlx_loop_hook(data.mlx, &control_hook, (void *) &data);
 	}
 	else
 	{

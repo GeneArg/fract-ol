@@ -6,7 +6,7 @@
 /*   By: eagranat <eagranat@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:06:23 by eagranat          #+#    #+#             */
-/*   Updated: 2024/04/12 16:14:53 by eagranat         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:27:46 by eagranat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
 # include "MLX42/include/MLX42/MLX42.h"
+
+# include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdint.h>
+# include <stdbool.h>
+# include <unistd.h>
 
 
 enum e_colours

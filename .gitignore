@@ -13,9 +13,9 @@
 infile
 outfile
 ft_printf
-libft
 MLX42
 pixel_test.c
+fractol1
 
 # Ignore files specific to macOS
 .DS_Store
