@@ -6,7 +6,7 @@
 /*   By: eagranat <eagranat@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:01:21 by eagranat          #+#    #+#             */
-/*   Updated: 2024/04/19 18:28:34 by eagranat         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:46:15 by eagranat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,36 @@ void	print_error(char *str, int exit_code)
 	exit(exit_code);
 }
 
-void	zoom(double x_change, double y_change, void *context)
+void zoom(double x_change, double y_change, void *context)
 {
-	t_data	*data;
-	float	scale;
+    t_data  *data;
+    float   scale;
+    double  x_mid, y_mid;
+    int32_t x_cursor, y_cursor;
 
-	data = (t_data *)context;
-	(void)x_change;
-	if (y_change > 0)
-		scale = 0.9;
-	else
-		scale = 1.1;
-	data->x[0] *= scale;
-	data->x[1] *= scale;
-	data->y[0] *= scale;
-	data->y[1] *= scale;
+    data = (t_data *)context;
+    if (y_change > 0)
+        scale = 0.95;
+    else
+        scale = 1.05;
+
+    // Get the cursor's position
+    mlx_get_mouse_pos(data->mlx, &x_cursor, &y_cursor);
+	(void) x_change;
+
+    // Convert the cursor's position from screen coordinates to fractal coordinates
+    double x_pos = data->x[0] + (x_cursor / 1080.0) * (data->x[1] - data->x[0]);
+    double y_pos = data->y[0] + (y_cursor / 720.0) * (data->y[1] - data->y[0]);
+
+    // Calculate the current midpoint of the x and y ranges
+    x_mid = (data->x[0] + data->x[1]) / 2;
+    y_mid = (data->y[0] + data->y[1]) / 2;
+
+    // Adjust the x and y ranges based on the cursor's position
+    data->x[0] = x_mid + (data->x[0] - x_mid) * scale + (x_pos - x_mid) * (1 - scale);
+    data->x[1] = x_mid + (data->x[1] - x_mid) * scale + (x_pos - x_mid) * (1 - scale);
+    data->y[0] = y_mid + (data->y[0] - y_mid) * scale + (y_pos - y_mid) * (1 - scale);
+    data->y[1] = y_mid + (data->y[1] - y_mid) * scale + (y_pos - y_mid) * (1 - scale);
 }
 
 unsigned int	calculate_color(t_data *data, float iter)

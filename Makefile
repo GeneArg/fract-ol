@@ -15,12 +15,18 @@ LIBFT			:= ${LIBFT_DIR}/libft.a
 MLX_DIR			:= MLX42
 MLX				:= ${MLX_DIR}/build/libmlx42.a
 
-MLX_FLAGS	:= -L ${MLX_DIR}/build -lmlx42 -lglfw -lm
+ifeq (${shell uname}, Linux)
+	MLX_FLAGS	:= -L ${MLX_DIR}/build -lmlx42 -lglfw -lm
+else ifeq (${shell uname}, Darwin)
+	MLX_FLAGS	:= -lglfw -L "/opt/homebrew/Cellar/glfw/3.4/lib/"
+else
+	MLX_FLAGS	:= -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
+endif
 
 # Compiler flags
 CC				:= cc
 CFLAGS			:= -Wall -Werror -Wextra
-INCL			:= -I ${HDR_DIR}/ -I ${LIBFT_DIR}/include/ -I ${MLX_DIR}/include/MLX42/ 
+INCL			:= -I ${HDR_DIR}/ -I ${LIBFT_DIR}/include/ -I ${MLX_DIR}/include/MLX42/
 
 # Includes
 HDR_FILES :=	fractol.h 		\
@@ -73,7 +79,7 @@ clean:
 	@ rm -rf $(OBJ)
 	@ rm -rf $(OBJ_DIR)
 
-fclean: 
+fclean:
 	@ echo "$(RED)$(BOLD)Fully cleaning LIBFT...$(RESET)"
 	@ make fclean -C $(LIBFT_DIR)												> /dev/null
 

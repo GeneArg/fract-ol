@@ -6,7 +6,7 @@
 /*   By: eagranat <eagranat@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:06:23 by eagranat          #+#    #+#             */
-/*   Updated: 2024/04/18 12:14:09 by eagranat         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:20:33 by eagranat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FRACTOL_H
 
 # include "libft/libft.h"
-# include "ft_printf/ft_printf.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
 # include <math.h>
