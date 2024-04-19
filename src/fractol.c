@@ -6,7 +6,7 @@
 /*   By: eagranat <eagranat@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:01:21 by eagranat          #+#    #+#             */
-/*   Updated: 2024/04/19 17:55:15 by eagranat         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:28:34 by eagranat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,9 +181,9 @@ void	handle_key_press_events(t_data *data)
 	}
 	else if (mlx_is_key_down(data->mlx, MLX_KEY_C))
 	{
-		data->colour[R] += 5;
-		data->colour[G] += 7;
-		data->colour[B] += 2;
+		data->colour[R] = (data->colour[R] + 5) % 256;
+		data->colour[G] = (data->colour[G] + 3) % 256;
+		data->colour[B] = (data->colour[B] + 7) % 256;
 	}
 }
 
@@ -251,9 +251,9 @@ void	initialize(t_data *data, int argc, char **argv)
 	data->x[1] = 2;
 	data->y[0] = 1.5;
 	data->y[1] = -1.5;
-	data->colour[R] = 2;
-	data->colour[G] = 4;
-	data->colour[B] = 6;
+	data->colour[R] = 128;
+	data->colour[G] = 128;
+	data->colour[B] = 128;
 	if (argc == 4)
 	{
 		data->julia[0] = ft_atof(argv[2]);

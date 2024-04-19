@@ -15,26 +15,12 @@ LIBFT			:= ${LIBFT_DIR}/libft.a
 MLX_DIR			:= MLX42
 MLX				:= ${MLX_DIR}/build/libmlx42.a
 
-ifeq (${shell uname}, Linux)
-	MLX_FLAGS	:= -L ${MLX_DIR}/build -lmlx42 -lglfw -lm
-else ifeq (${shell uname}, Darwin)
-	MLX_FLAGS	:= -lglfw -L "/opt/homebrew/Cellar/glfw/3.4/lib/"
-else
-	MLX_FLAGS	:= -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
-endif
+MLX_FLAGS	:= -L ${MLX_DIR}/build -lmlx42 -lglfw -lm
 
 # Compiler flags
 CC				:= cc
 CFLAGS			:= -Wall -Werror -Wextra
 INCL			:= -I ${HDR_DIR}/ -I ${LIBFT_DIR}/include/ -I ${MLX_DIR}/include/MLX42/ 
-
-ifdef FAST
-	CFLAGS		+= -Ofast -fno-fast-math -flto -march=native
-endif
-
-ifdef DEBUG
-	CFLAGS		+= -g -fsanitize=address
-endif
 
 # Includes
 HDR_FILES :=	fractol.h 		\
@@ -78,12 +64,6 @@ $(MLX):
 	@ cmake $(MLX_DIR) -B $(MLX_DIR)/build										> /dev/null
 	@ make -C $(MLX_DIR)/build -j4												> /dev/null
 	@ printf "\t\t%b%s%b\n" "$(GREEN)$(BOLD)" "[OK]" "$(RESET)"
-
-open: $(NAME)
-	@ ./$(NAME) 1
-
-norm:
-	@ norminette $(HDR_DIR) $(SRC) | grep -v -e "Empty line in function" -e "Comment is invalid in this scope" -e "extra tabs before function name"
 
 clean:
 	@ echo "$(RED)$(BOLD)Cleaning LIBFT...$(RESET)"
