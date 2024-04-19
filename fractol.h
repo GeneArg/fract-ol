@@ -6,7 +6,7 @@
 /*   By: eagranat <eagranat@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:06:23 by eagranat          #+#    #+#             */
-/*   Updated: 2024/04/17 18:27:46 by eagranat         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:14:09 by eagranat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ enum e_colours
 /**
 	* @param *mlx 			graphics library initialized
 	* @param *img 			image thats on my screen
+	* @param fractal 		1 - Mandelbrot, 2 - Julia
 	* @param iter 			max iterations
 	* @param x[2] 			projected / scaled x
 	* @param y[2] 			projected / scaled y
@@ -46,6 +47,7 @@ typedef struct s_data
 {
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	int				fractal;
 	long			iter;
 	float			x[2];
 	float			y[2];
