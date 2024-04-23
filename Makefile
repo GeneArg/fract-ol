@@ -6,6 +6,8 @@ HDR_DIR			:= include
 LIB_DIR			:= lib
 SRC_DIR			:= src
 OBJ_DIR			:= obj
+BONUS_DIR		:= bonus
+BONUS_OBJ_DIR	:= bonus_obj
 
 # Libft
 LIBFT_DIR		:= libft
@@ -33,10 +35,23 @@ HDR_FILES :=	fractol.h 		\
 
 # Files
 SRC_FILES :=	fractol.c \
+				fractals.c \
+				handle_events.c \
+				init.c \
+				utils.c \
+
+BONUS_SRC_FILES :=	fractol_bonus.c \
+					fractals_bonus.c \
+					burning_ship_bonus.c \
+					handle_events_bonus.c \
+					init_bonus.c \
+					utils_bonus.c \
 
 SRC				:= ${addprefix ${SRC_DIR}/, ${SRC_FILES}}
 OBJ				:= ${addprefix ${OBJ_DIR}/, ${SRC_FILES:.c=.o}}
 HDR				:= ${addprefix ${HDR_DIR}/, ${HDR_FILES}}
+BONUS_SRC		:= ${addprefix ${BONUS_DIR}/, ${BONUS_SRC_FILES}}
+BONUS_OBJ		:= ${addprefix ${BONUS_OBJ_DIR}/, ${BONUS_SRC_FILES:.c=.o}}
 
 # Colours
 GREEN			:= \033[32;1m
@@ -60,6 +75,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	@ mkdir -p $(OBJ_DIR)
 
+$(BONUS_OBJ_DIR)/%.o: $(BONUS_DIR)/%.c | $(BONUS_OBJ_DIR)
+	@ $(CC) $(CFLAGS) $(INCL) -c $< -o $@
+
+$(BONUS_OBJ_DIR):
+	@ mkdir -p $(BONUS_OBJ_DIR)
+
 $(LIBFT):
 	@ printf "%b%s%b" "$(YELLOW)$(BOLD)" "Compiling and archiving LIBFT..." "$(RESET)"
 	@ make -C $(LIBFT_DIR)														> /dev/null
@@ -71,13 +92,18 @@ $(MLX):
 	@ make -C $(MLX_DIR)/build -j4												> /dev/null
 	@ printf "\t\t%b%s%b\n" "$(GREEN)$(BOLD)" "[OK]" "$(RESET)"
 
+bonus: $(LIBFT) $(MLX) $(BONUS_OBJ)
+	@ printf "%b%s%b" "$(YELLOW)$(BOLD)" "Compiling BONUS..." "$(RESET)"
+	@ $(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) $(MLX_FLAGS) $(MLX) -o $(NAME)
+	@ printf "\t\t%b%s%b\n" "$(GREEN)$(BOLD)" "		[OK]" "$(RESET)"
+
 clean:
 	@ echo "$(RED)$(BOLD)Cleaning LIBFT...$(RESET)"
 	@ make clean -C $(LIBFT_DIR)												> /dev/null
 
 	@ echo "$(RED)$(BOLD)Cleaning $(NICKNAME)...$(RESET)"
-	@ rm -rf $(OBJ)
-	@ rm -rf $(OBJ_DIR)
+	@ rm -rf $(OBJ) $(BONUS_OBJ)
+	@ rm -rf $(OBJ_DIR) $(BONUS_OBJ_DIR)
 
 fclean:
 	@ echo "$(RED)$(BOLD)Fully cleaning LIBFT...$(RESET)"
@@ -88,9 +114,9 @@ fclean:
 
 	@ echo "$(RED)$(BOLD)Fully cleaning $(NICKNAME)...$(RESET)"
 	@ rm -rf ${NAME}
-	@ rm -rf $(OBJ)
-	@ rm -rf $(OBJ_DIR)
+	@ rm -rf $(OBJ) $(BONUS_OBJ)
+	@ rm -rf $(OBJ_DIR) $(BONUS_OBJ_DIR)
 
 re: fclean $(NAME)
 
-.PHONY: all submodule norm clean fclean re submodule
+.PHONY: all clean fclean re bonus

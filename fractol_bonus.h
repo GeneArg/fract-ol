@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   fractol_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eagranat <eagranat@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 13:01:54 by eagranat          #+#    #+#             */
-/*   Updated: 2024/04/22 15:05:34 by eagranat         ###   ########.fr       */
+/*   Created: 2024/04/11 16:06:23 by eagranat          #+#    #+#             */
+/*   Updated: 2024/04/22 13:35:33 by eagranat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int				validate_coords(char *str);
 float			ft_atof(char *str);
 void			initialize(t_data *data, int argc, char **argv);
 void			initialize_mlx(t_data *data);
+void			initialize_burning_ship(t_data *data);
 unsigned int	calculate_color(t_data *data, float iter);
 void			zoom(double x_change, double y_change, void *context);
 void			print_error(char *str, int exit_code);
@@ -67,5 +68,7 @@ void			julia(t_data *d);
 int				check_julia(t_data *data, float x, float y);
 void			mandelbrot(t_data *d);
 float			check_mandelbrot(int max_iter, float orig_x, float orig_y);
+void			burning_ship(t_data *d);
+float			check_burning_ship(t_data *data, float orig_x, float orig_y);
 
 #endif
